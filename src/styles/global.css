@@ -132,21 +132,21 @@ button {
 }
 
 .main-content {
-  padding: 22px;
+  padding: 18px;
 }
 
 .topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
-  padding: 18px 22px;
-  border-radius: 24px;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 20px;
 }
 
 .topbar h1 {
   margin: 0;
-  font-size: 1.6rem;
+  font-size: 1.3rem;
 }
 
 .topbar-left,
@@ -154,7 +154,7 @@ button {
 .topbar-user {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
 }
 
 .menu-toggle,
@@ -169,10 +169,10 @@ button {
 }
 
 .menu-toggle {
-  width: 52px;
-  height: 52px;
-  border-radius: 18px;
-  font-size: 1.2rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  font-size: 1rem;
   cursor: pointer;
 }
 
@@ -180,12 +180,13 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 16px;
-  border-radius: 14px;
+  padding: 8px 12px;
+  border-radius: 12px;
   background: #e7f6fb;
   border: 1px solid #a7dbeb;
   color: #1f6170;
   font-weight: 600;
+  font-size: 0.92rem;
   cursor: pointer;
 }
 
@@ -197,15 +198,15 @@ button {
 }
 
 .topbar-icon {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 4px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.92rem;
 }
 
 .topbar-mini-caret {
@@ -216,11 +217,12 @@ button {
 .topbar-user {
   color: #566882;
   font-weight: 600;
+  font-size: 0.95rem;
 }
 
 .topbar-user-avatar {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -235,7 +237,7 @@ button {
 }
 
 .page-section {
-  margin-top: 22px;
+  margin-top: 16px;
 }
 
 .page-heading h2,
@@ -402,7 +404,7 @@ button {
 
 .dashboard-page {
   display: grid;
-  gap: 18px;
+  gap: 14px;
 }
 
 .dashboard-hero {
@@ -414,7 +416,7 @@ button {
 .dashboard-summary-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 12px;
 }
 
 .hero-target-card,
@@ -428,7 +430,7 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18px;
+  padding: 16px;
   background: linear-gradient(135deg, #ff9642, #ff6200);
   color: white;
 }
@@ -436,7 +438,7 @@ button {
 .hero-target-card h3 {
   margin: 0;
   max-width: 240px;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .hero-badges {
@@ -446,42 +448,46 @@ button {
 }
 
 .hero-pill {
-  padding: 8px 12px;
+  padding: 6px 10px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.18);
   border: 1px solid rgba(255, 255, 255, 0.35);
+  font-size: 0.85rem;
 }
 
 .hero-progress-ring {
-  width: 104px;
-  height: 104px;
+  width: 88px;
+  height: 88px;
   border-radius: 50%;
   display: grid;
   place-items: center;
-  font-size: 1.8rem;
+  font-size: 1.45rem;
   font-weight: 800;
-  border: 8px solid rgba(255, 255, 255, 0.22);
-  box-shadow: inset 0 0 0 8px rgba(255, 255, 255, 0.12);
+  border: 6px solid rgba(255, 255, 255, 0.22);
+  box-shadow: inset 0 0 0 6px rgba(255, 255, 255, 0.12);
 }
 
 .summary-card {
   display: flex;
-  gap: 14px;
-  padding: 18px;
+  gap: 10px;
+  padding: 14px;
   background: rgba(255, 255, 255, 0.92);
 }
 
 .summary-card-body {
   flex: 1;
+  min-width: 0;
 }
 
 .summary-card-body h3 {
   margin: 0 0 6px;
-  font-size: 1.05rem;
+  font-size: 0.76rem;
+  line-height: 1.2;
 }
 
 .summary-card-body strong {
-  font-size: 2rem;
+  font-size: 1.05rem;
+  line-height: 1.1;
 }
 
 .summary-card-meta,
@@ -508,13 +514,27 @@ button {
   margin-top: 12px;
 }
 
+.summary-card-meta,
+.summary-card-footer {
+  font-size: 0.72rem;
+  flex-wrap: wrap;
+  row-gap: 6px;
+}
+
+.summary-card-meta span:last-child,
+.summary-card-footer span:last-child {
+  margin-left: auto;
+  text-align: right;
+}
+
 .summary-card-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 16px;
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
   display: grid;
   place-items: center;
   font-weight: 800;
+  font-size: 0.85rem;
 }
 
 .summary-card-icon-gold {
@@ -538,7 +558,7 @@ button {
 }
 
 .mini-progress {
-  width: 120px;
+  width: 84px;
   height: 6px;
   border-radius: 999px;
   background: #e7edf6;
@@ -1560,14 +1580,14 @@ button {
 
 .bt-top h2 {
   margin: 0;
-  font-size: 2rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: #2d3e57;
 }
 
 .bt-top p {
   margin: 6px 0 0;
-  font-size: 1rem;
+  font-size: 0.92rem;
   color: #7d8eaa;
 }
 
@@ -1582,6 +1602,7 @@ button {
   color: #2078dd;
   font-weight: 700;
   padding: 6px 10px;
+  font-size: 0.9rem;
   white-space: nowrap;
 }
 
@@ -1607,7 +1628,7 @@ button {
 
 .bt-card-header h3 {
   margin: 0;
-  font-size: 1.95rem;
+  font-size: 0.8rem;
   letter-spacing: 0.06em;
   font-weight: 700;
   color: #556981;
@@ -1618,13 +1639,13 @@ button {
   background: #f7f9fc;
   border-radius: 999px;
   padding: 6px 12px;
-  font-size: 1.45rem;
+  font-size: 0.82rem;
   color: #5e718b;
 }
 
 .bt-card-amount {
   margin: 8px 0 0;
-  font-size: 3.1rem;
+  font-size: 1.05rem;
   line-height: 1;
   font-weight: 800;
 }
@@ -1643,7 +1664,8 @@ button {
 
 .bt-card-description {
   margin: 10px 0 0;
-  font-size: 1.55rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
   color: #8a9ab2;
 }
 
@@ -1654,6 +1676,7 @@ button {
   padding: 18px;
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 18px;
 }
 
@@ -1674,7 +1697,7 @@ button {
   gap: 8px;
   color: #3b4f6d;
   font-weight: 600;
-  font-size: 1.65rem;
+  font-size: 0.92rem;
 }
 
 .bt-filter-left select,
@@ -1686,8 +1709,8 @@ button {
   border-radius: 8px;
   background: white;
   color: #374a67;
-  font-size: 1.62rem;
-  padding: 9px 14px;
+  font-size: 0.9rem;
+  padding: 8px 12px;
 }
 
 .bt-period-buttons {
@@ -1723,7 +1746,7 @@ button {
   border: 0;
   background: transparent;
   color: #324867;
-  font-size: 1.6rem;
+  font-size: 0.9rem;
   font-weight: 700;
   padding: 6px 14px;
   border-radius: 999px;
@@ -1761,8 +1784,8 @@ button {
 }
 
 .bt-search-box button svg {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
 }
 
 .bt-apply-btn {
@@ -1796,7 +1819,7 @@ button {
   color: #5c6f8a;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-size: 1.5rem;
+  font-size: 0.88rem;
   font-weight: 700;
   padding: 14px 14px;
 }
@@ -1804,14 +1827,17 @@ button {
 .bt-table td {
   padding: 14px;
   border-top: 1px solid #ebf1f8;
-  text-align: right;
-  font-size: 1.9rem;
-  font-weight: 700;
+  text-align: left;
+  font-size: 0.94rem;
+  font-weight: 600;
   color: #324867;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
 }
 
 .bt-table td span {
-  margin-left: 24px;
+  margin-left: 0;
 }
 
 .exp-page {
@@ -4443,12 +4469,12 @@ button {
   .bt-search-box input,
   .bt-search-box button,
   .bt-apply-btn {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .bt-card-description,
   .bt-table td {
-    font-size: 0.95rem;
+    font-size: 0.88rem;
   }
 
   .exp-summary-grid {
