@@ -231,7 +231,9 @@ export function AppLayout() {
   const location = useLocation();
   const [isExamOpen, setIsExamOpen] = useState(true);
   const [isLmsOpen, setIsLmsOpen] = useState(false);
-  const [isHrmsOpen, setIsHrmsOpen] = useState(false);
+  const [isHrmsOpen, setIsHrmsOpen] = useState(() =>
+    location.pathname.startsWith("/hrms")
+  );
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const pageTitles = {
     "/dashboard": "Dashboard",
@@ -250,7 +252,12 @@ export function AppLayout() {
     "/review-queue": "Review Queue",
     "/batches": "Batch Management",
     "/courses": "Courses",
-    "/my-batches": "My Batches"
+    "/my-batches": "My Batches",
+    "/hrms/attendance": "Attendance",
+    "/hrms/attendance-policies": "Attendance Policies",
+    "/hrms/employees": "Employees",
+    "/hrms/leave-management": "Leave Management",
+    "/hrms/payroll": "Payroll"
   };
 
   const headerTitle = pageTitles[location.pathname] ?? "Dashboard";
@@ -414,36 +421,56 @@ export function AppLayout() {
             </button>
             {isHrmsOpen && (
               <>
-                <div className="nav-link" style={{ paddingLeft: "36px" }}>
+                <NavLink
+                  to="/hrms/attendance"
+                  className={({ isActive }) => (isActive ? "nav-link nav-link-active" : "nav-link")}
+                  style={{ paddingLeft: "36px" }}
+                >
                   <span className="nav-icon">
                     <NavIcon icon="attendance" />
                   </span>
                   <span>Attendance</span>
-                </div>
-                <div className="nav-link" style={{ paddingLeft: "36px" }}>
+                </NavLink>
+                <NavLink
+                  to="/hrms/attendance-policies"
+                  className={({ isActive }) => (isActive ? "nav-link nav-link-active" : "nav-link")}
+                  style={{ paddingLeft: "36px" }}
+                >
                   <span className="nav-icon">
                     <NavIcon icon="attendancePolicies" />
                   </span>
                   <span>Attendance Policies</span>
-                </div>
-                <div className="nav-link" style={{ paddingLeft: "36px" }}>
+                </NavLink>
+                <NavLink
+                  to="/hrms/employees"
+                  className={({ isActive }) => (isActive ? "nav-link nav-link-active" : "nav-link")}
+                  style={{ paddingLeft: "36px" }}
+                >
                   <span className="nav-icon">
                     <NavIcon icon="employees" />
                   </span>
                   <span>Employees</span>
-                </div>
-                <div className="nav-link" style={{ paddingLeft: "36px" }}>
+                </NavLink>
+                <NavLink
+                  to="/hrms/leave-management"
+                  className={({ isActive }) => (isActive ? "nav-link nav-link-active" : "nav-link")}
+                  style={{ paddingLeft: "36px" }}
+                >
                   <span className="nav-icon">
                     <NavIcon icon="leave" />
                   </span>
                   <span>Leave Management</span>
-                </div>
-                <div className="nav-link" style={{ paddingLeft: "36px" }}>
+                </NavLink>
+                <NavLink
+                  to="/hrms/payroll"
+                  className={({ isActive }) => (isActive ? "nav-link nav-link-active" : "nav-link")}
+                  style={{ paddingLeft: "36px" }}
+                >
                   <span className="nav-icon">
                     <NavIcon icon="payroll" />
                   </span>
                   <span>Payroll</span>
-                </div>
+                </NavLink>
               </>
             )}
 

@@ -4436,6 +4436,347 @@ button {
   font-size: 0.98rem;
 }
 
+.hrms-page {
+  display: grid;
+  gap: 14px;
+}
+
+.hrms-panel {
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+
+.hrms-head,
+.hrms-actions,
+.hrms-toolbar,
+.hrms-tab-row,
+.hrms-form-actions,
+.hrms-type-add {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hrms-head {
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.hrms-head h2 {
+  margin: 0;
+  color: #304760;
+  font-size: 1rem;
+}
+
+.hrms-head p {
+  margin: 4px 0 0;
+  color: #546b8b;
+  font-size: 0.95rem;
+}
+
+.hrms-actions {
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.hrms-actions input,
+.hrms-actions select,
+.hrms-toolbar input,
+.hrms-toolbar select,
+.hrms-form-grid input,
+.hrms-form-grid select,
+.hrms-form-grid textarea,
+.hrms-type-add input {
+  border: 1px solid #c6d3e2;
+  border-radius: 7px;
+  background: white;
+  color: #354f6f;
+  font-size: 0.94rem;
+  padding: 9px 12px;
+  min-width: 190px;
+}
+
+.hrms-btn {
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 0.94rem;
+}
+
+.hrms-btn-primary {
+  border: 1px solid #1e89df;
+  background: #258de0;
+  color: white;
+  font-weight: 700;
+}
+
+.hrms-btn-light {
+  border: 1px solid #d6deea;
+  background: #f3f7fb;
+  color: #36507f;
+}
+
+.hrms-toolbar {
+  margin-top: 12px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.hrms-stat-strip {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.hrms-stat-strip span,
+.hrms-chip-muted {
+  border-radius: 999px;
+  background: #edf5ff;
+  color: #39649c;
+  padding: 6px 10px;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.hrms-table-wrap {
+  margin-top: 12px;
+  overflow-x: auto;
+}
+
+.hrms-table {
+  width: 100%;
+  min-width: 860px;
+  border-collapse: collapse;
+}
+
+.hrms-table th,
+.hrms-table td {
+  text-align: left;
+  padding: 11px 10px;
+  border-top: 1px solid #e4ebf5;
+  color: #2f4665;
+  font-size: 0.92rem;
+}
+
+.hrms-table th {
+  border-top: 0;
+  color: #546b8b;
+  font-size: 0.88rem;
+  letter-spacing: 0.02em;
+}
+
+.hrms-pill {
+  border-radius: 999px;
+  padding: 3px 9px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.hrms-pill-present,
+.hrms-pill-approved {
+  color: #0f9158;
+  background: #e7f9ef;
+}
+
+.hrms-pill-late,
+.hrms-pill-pending {
+  color: #bb7700;
+  background: #fff4da;
+}
+
+.hrms-pill-leave,
+.hrms-pill-cancelled {
+  color: #466d96;
+  background: #e9f1fc;
+}
+
+.hrms-pill-rejected {
+  color: #bb3b50;
+  background: #ffe9ee;
+}
+
+.hrms-modal-backdrop,
+.hrms-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(13, 24, 38, 0.44);
+  z-index: 24;
+  padding: 20px;
+  overflow: auto;
+}
+
+.hrms-modal,
+.hrms-drawer {
+  background: white;
+  box-shadow: 0 20px 50px rgba(15, 27, 47, 0.35);
+}
+
+.hrms-modal {
+  width: min(100%, 980px);
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
+.hrms-modal-sm {
+  width: min(100%, 560px);
+}
+
+.hrms-modal header,
+.hrms-drawer header {
+  padding: 14px 18px;
+  border-bottom: 1px solid #e4ecf5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hrms-modal header h3,
+.hrms-drawer header h3 {
+  margin: 0;
+  color: #304760;
+  font-size: 1rem;
+}
+
+.hrms-modal header button {
+  border: 0;
+  background: transparent;
+  color: #7f8ca2;
+  font-size: 1.4rem;
+}
+
+.hrms-form-grid {
+  padding: 14px 18px 18px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 14px;
+}
+
+.hrms-form-grid label {
+  display: grid;
+  gap: 8px;
+  color: #334b69;
+  font-size: 0.93rem;
+  font-weight: 600;
+}
+
+.hrms-col-2 {
+  grid-column: span 2;
+}
+
+.hrms-form-actions {
+  justify-content: flex-end;
+}
+
+.hrms-card-grid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.hrms-employee-card {
+  border: 1px solid #e1e8f2;
+  border-radius: 12px;
+  background: white;
+  padding: 14px;
+  display: grid;
+  gap: 5px;
+}
+
+.hrms-employee-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  color: white;
+  background: #4aa6d8;
+  font-weight: 700;
+}
+
+.hrms-employee-card h3 {
+  margin: 6px 0 0;
+  font-size: 0.93rem;
+  color: #324968;
+}
+
+.hrms-employee-card p {
+  margin: 0;
+  color: #6780a2;
+  font-size: 0.88rem;
+}
+
+.hrms-employee-card small {
+  color: #607898;
+  font-size: 0.82rem;
+}
+
+.hrms-chip {
+  width: fit-content;
+  border-radius: 999px;
+  background: #e4f4e8;
+  color: #18a262;
+  padding: 3px 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.hrms-drawer {
+  margin-left: auto;
+  width: min(100%, 580px);
+  min-height: 100%;
+}
+
+.hrms-tab-row {
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.hrms-tab {
+  border: 1px solid #d9e2f0;
+  background: white;
+  color: #4c6382;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 0.9rem;
+}
+
+.hrms-tab-active {
+  background: #5f6fcb;
+  border-color: #5f6fcb;
+  color: white;
+}
+
+.hrms-tab-fill {
+  flex: 1;
+  min-width: 20px;
+}
+
+.hrms-type-list {
+  padding: 14px 18px 8px;
+  display: grid;
+  gap: 8px;
+}
+
+.hrms-type-list div {
+  border: 1px solid #dce6f3;
+  border-radius: 8px;
+  background: #f8fbff;
+  color: #3a5476;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+}
+
+.hrms-type-add {
+  padding: 8px 18px 18px;
+}
+
+.hrms-table-payroll {
+  min-width: 980px;
+}
+
 @media (max-width: 960px) {
   .bt-top,
   .bt-filter-wrap {
@@ -4627,6 +4968,27 @@ button {
   .lms-page-head {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .hrms-actions,
+  .hrms-toolbar {
+    justify-content: flex-start;
+  }
+
+  .hrms-actions input,
+  .hrms-actions select,
+  .hrms-toolbar input,
+  .hrms-toolbar select {
+    min-width: 100%;
+  }
+
+  .hrms-card-grid,
+  .hrms-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hrms-col-2 {
+    grid-column: span 1;
   }
 }
 
