@@ -25,12 +25,52 @@ import { EmployeesPage } from "../pages/EmployeesPage.jsx";
 import { LeaveManagementPage } from "../pages/LeaveManagementPage.jsx";
 import { PayrollPage } from "../pages/PayrollPage.jsx";
 
+function hasAuthToken() {
+  return Boolean(localStorage.getItem("demo_auth_token"));
+}
+
+function RequireAuth({ children }) {
+  if (!hasAuthToken()) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+}
+
+function PublicOnly({ children }) {
+  if (hasAuthToken()) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return children;
+}
+
 export function AppRoutes() {
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
-      <Route element={<AppLayout />}>
+      <Route
+        path="/login"
+        element={(
+          <PublicOnly>
+            <LoginPage />
+          </PublicOnly>
+        )}
+      />
+      <Route
+        path="/register"
+        element={(
+          <PublicOnly>
+            <RegisterPage />
+          </PublicOnly>
+        )}
+      />
+      <Route
+        element={(
+          <RequireAuth>
+            <AppLayout />
+          </RequireAuth>
+        )}
+      >
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/all-enquiries" element={<AllEnquiriesPage />} />
         <Route path="/programs" element={<ProgramsPage />} />
@@ -60,7 +100,10 @@ export function AppRoutes() {
         <Route path="/hrms/leave-management" element={<LeaveManagementPage />} />
         <Route path="/hrms/payroll" element={<PayrollPage />} />
       </Route>
-      <Route path="*" element={<Navigate to="/login" replace />} />
+      <Route
+        path="*"
+        element={<Navigate to={hasAuthToken() ? "/dashboard" : "/login"} replace />}
+      />
     </Routes>
   );
 }

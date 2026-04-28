@@ -29,6 +29,23 @@ body {
   color: #24324a;
 }
 
+body.dark-theme {
+  background: #000000;
+  color: #f5f7ff;
+}
+
+body.dark-theme .sidebar,
+body.dark-theme .topbar,
+body.dark-theme .table-card,
+body.dark-theme .stat-card,
+body.dark-theme .auth-card,
+body.dark-theme .admission-form-card,
+body.dark-theme .lms-panel,
+body.dark-theme .lms-batch-card {
+  background: rgba(18, 18, 18, 0.95);
+  color: #f5f7ff;
+}
+
 a {
   color: var(--primary);
   text-decoration: none;
@@ -218,6 +235,45 @@ button {
   color: #566882;
   font-weight: 600;
   font-size: 0.95rem;
+}
+
+.topbar-user-wrap {
+  position: relative;
+}
+
+.topbar-user-button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.topbar-user-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 140px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 12px 24px rgba(40, 58, 87, 0.18);
+  z-index: 10;
+}
+
+.topbar-user-menu-item {
+  width: 100%;
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  text-align: left;
+  background: transparent;
+  color: #2f4665;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.topbar-user-menu-item:hover {
+  background: #f3f8ff;
 }
 
 .topbar-user-avatar {

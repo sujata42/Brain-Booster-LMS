@@ -39,6 +39,9 @@ export function LoginPage() {
       });
 
       localStorage.setItem("demo_auth_token", result.token || "demo-token");
+      if (result.user) {
+        localStorage.setItem("demo_auth_user", JSON.stringify(result.user));
+      }
       navigate("/dashboard");
     } catch (error) {
       setErrorMessage(error.message || "Login failed. Please try again.");

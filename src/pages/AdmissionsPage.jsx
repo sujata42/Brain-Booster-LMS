@@ -151,6 +151,97 @@ function ActionIcons() {
 
 export function AdmissionsPage() {
   const [showAddForm, setShowAddForm] = useState(false);
+  const [rows, setRows] = useState(admissionRows);
+  const [currentStep, setCurrentStep] = useState(1);
+  const [form, setForm] = useState({
+    branch: "Shivajinagar",
+    gender: "",
+    firstName: "",
+    lastName: "",
+    phone: "",
+    leadOwner: "Ishan Bhokarikar",
+    course: "",
+    batch: "",
+    status: "Pending",
+    visibilityBranch: "Shivajinagar",
+    numberOfInstallments: "1",
+    receiveAmount: "0"
+  });
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setForm((current) => ({ ...current, [name]: value }));
+  }
+
+  function resetAdmissionForm() {
+    setCurrentStep(1);
+    setForm({
+      branch: "Shivajinagar",
+      gender: "",
+      firstName: "",
+      lastName: "",
+      phone: "",
+      leadOwner: "Ishan Bhokarikar",
+      course: "",
+      batch: "",
+      status: "Pending",
+      visibilityBranch: "Shivajinagar",
+      numberOfInstallments: "1",
+      receiveAmount: "0"
+    });
+  }
+
+  function closeAdmissionForm() {
+    setShowAddForm(false);
+    resetAdmissionForm();
+  }
+
+  function handleNext() {
+    if (
+      currentStep === 1 &&
+      (!form.branch ||
+        !form.gender ||
+        !form.firstName.trim() ||
+        !form.lastName.trim() ||
+        !form.phone.trim() ||
+        !form.course ||
+        !form.leadOwner)
+    ) {
+      return;
+    }
+    if (currentStep < 4) setCurrentStep((value) => value + 1);
+  }
+
+  function handlePrevious() {
+    if (currentStep > 1) setCurrentStep((value) => value - 1);
+  }
+
+  function formatDate(date) {
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = date.toLocaleString("en-US", { month: "short" });
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
+
+  function handleFinalSubmit() {
+    const newNumber = `BB${String(121 + rows.filter((item) => item.type === "row").length).padStart(3, "0")}`;
+    const today = new Date();
+    const newRow = {
+      type: "row",
+      number: newNumber,
+      date: formatDate(today),
+      name: `${form.firstName} ${form.lastName}`.trim().toUpperCase(),
+      mobile: form.phone,
+      owner: form.leadOwner,
+      course: form.course,
+      batch: form.batch || "-",
+      status: form.status,
+      overdue: false
+    };
+
+    setRows((current) => [newRow, ...current]);
+    closeAdmissionForm();
+  }
 
   return (
     <section className="page-section admissions-page">
@@ -215,7 +306,10 @@ export function AdmissionsPage() {
                 <button
                   type="button"
                   className="admissions-add-btn"
-                  onClick={() => setShowAddForm(true)}
+                  onClick={() => {
+                    resetAdmissionForm();
+                    setShowAddForm(true);
+                  }}
                 >
                   + Add Admission
                 </button>
@@ -238,7 +332,7 @@ export function AdmissionsPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {admissionRows.map((row) => {
+                  {rows.map((row) => {
                     if (row.type === "month") {
                       return (
                         <tr key={row.label} className="admissions-month-row">
@@ -329,23 +423,23 @@ export function AdmissionsPage() {
             <button
               type="button"
               className="admissions-list-btn"
-              onClick={() => setShowAddForm(false)}
+              onClick={closeAdmissionForm}
             >
               Admissions List
             </button>
           </div>
 
           <div className="admission-wizard-tabs">
-            <button type="button" className="active">
+            <button type="button" className={currentStep === 1 ? "active" : ""}>
               <span>STEP 1</span> Personal &amp; Course Seed
             </button>
-            <button type="button">
+            <button type="button" className={currentStep === 2 ? "active" : ""}>
               <span>STEP 2</span> Course Details
             </button>
-            <button type="button">
+            <button type="button" className={currentStep === 3 ? "active" : ""}>
               <span>STEP 3</span> Other &amp; Visibility
             </button>
-            <button type="button">
+            <button type="button" className={currentStep === 4 ? "active" : ""}>
               <span>STEP 4</span> Installments &amp; Summary
             </button>
           </div>
@@ -360,11 +454,16 @@ export function AdmissionsPage() {
           </div>
 
           <div className="table-card admission-form-card">
-            <h3>STEP 1: Personal Details</h3>
-            <form className="admission-form-grid">
+            {currentStep === 1 ? <h3>STEP 1: Personal Details</h3> : null}
+            {currentStep === 2 ? <h3>STEP 2: Course Details</h3> : null}
+            {currentStep === 3 ? <h3>STEP 3: Other &amp; Visibility</h3> : null}
+            {currentStep === 4 ? <h3>STEP 4: Installments &amp; Summary</h3> : null}
+
+            {currentStep === 1 ? (
+              <form className="admission-form-grid">
               <label>
                 Branch*
-                <select defaultValue="Shivajinagar">
+                <select name="branch" value={form.branch} onChange={handleChange}>
                   <option>Shivajinagar</option>
                   <option>Kothrud</option>
                   <option>Hadapsar</option>
@@ -379,7 +478,7 @@ export function AdmissionsPage() {
 
               <label>
                 Gender*
-                <select defaultValue="">
+                <select name="gender" value={form.gender} onChange={handleChange}>
                   <option value="" disabled>
                     Select
                   </option>
@@ -390,7 +489,7 @@ export function AdmissionsPage() {
               </label>
               <label>
                 First name*
-                <input type="text" />
+                <input name="firstName" type="text" value={form.firstName} onChange={handleChange} />
               </label>
               <label>
                 Middle Name
@@ -398,12 +497,12 @@ export function AdmissionsPage() {
               </label>
               <label>
                 Last name*
-                <input type="text" />
+                <input name="lastName" type="text" value={form.lastName} onChange={handleChange} />
               </label>
 
               <label>
                 Phone number*
-                <input type="text" />
+                <input name="phone" type="text" value={form.phone} onChange={handleChange} />
                 <small>10 digits</small>
               </label>
               <label>
@@ -462,11 +561,11 @@ export function AdmissionsPage() {
               </label>
               <label>
                 Course
-                <select defaultValue="">
+                <select name="course" value={form.course} onChange={handleChange}>
                   <option value="" disabled>
                     Select Course
                   </option>
-                  <option>Spoken English</option>
+                  <option>SPOKEN ENGLISH</option>
                   <option>Handwriting</option>
                   <option>Personality Development</option>
                 </select>
@@ -475,10 +574,11 @@ export function AdmissionsPage() {
 
               <label>
                 Batch
-                <select defaultValue="">
+                <select name="batch" value={form.batch} onChange={handleChange}>
                   <option value="" disabled>
                     Select Batch
                   </option>
+                  <option>1ST BATCH</option>
                   <option>Morning</option>
                   <option>Evening</option>
                 </select>
@@ -524,7 +624,7 @@ export function AdmissionsPage() {
               </label>
               <label>
                 Lead Owner*
-                <select defaultValue="Ishan Bhokarikar">
+                <select name="leadOwner" value={form.leadOwner} onChange={handleChange}>
                   <option>Ishan Bhokarikar</option>
                   <option>Rahul Takale</option>
                 </select>
@@ -557,9 +657,104 @@ export function AdmissionsPage() {
                   <option>ST</option>
                 </select>
               </label>
-            </form>
+              </form>
+            ) : null}
+
+            {currentStep === 2 ? (
+              <form className="admission-form-grid">
+                <label>
+                  Course*
+                  <select name="course" value={form.course} onChange={handleChange}>
+                    <option value="" disabled>
+                      Select Course
+                    </option>
+                    <option>SPOKEN ENGLISH</option>
+                    <option>Handwriting</option>
+                    <option>Personality Development</option>
+                  </select>
+                </label>
+                <label>
+                  Batch
+                  <select name="batch" value={form.batch} onChange={handleChange}>
+                    <option value="">Select Batch</option>
+                    <option>1ST BATCH</option>
+                    <option>Morning</option>
+                    <option>Evening</option>
+                  </select>
+                </label>
+                <label>
+                  Lead Owner*
+                  <select name="leadOwner" value={form.leadOwner} onChange={handleChange}>
+                    <option>Ishan Bhokarikar</option>
+                    <option>Rahul Takale</option>
+                  </select>
+                </label>
+              </form>
+            ) : null}
+
+            {currentStep === 3 ? (
+              <form className="admission-form-grid">
+                <label>
+                  Visibility Branch
+                  <select name="visibilityBranch" value={form.visibilityBranch} onChange={handleChange}>
+                    <option>Shivajinagar</option>
+                    <option>Kothrud</option>
+                    <option>Hadapsar</option>
+                  </select>
+                </label>
+                <label>
+                  Admission Status
+                  <select name="status" value={form.status} onChange={handleChange}>
+                    <option>Pending</option>
+                    <option>Paid</option>
+                    <option>Cancelled</option>
+                  </select>
+                </label>
+              </form>
+            ) : null}
+
+            {currentStep === 4 ? (
+              <form className="admission-form-grid">
+                <label>
+                  Number Of Installments
+                  <select
+                    name="numberOfInstallments"
+                    value={form.numberOfInstallments}
+                    onChange={handleChange}
+                  >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </label>
+                <label>
+                  Receive Amount
+                  <input
+                    name="receiveAmount"
+                    type="number"
+                    value={form.receiveAmount}
+                    onChange={handleChange}
+                  />
+                </label>
+              </form>
+            ) : null}
+
             <div className="admission-form-footer">
-              <button type="button">Next</button>
+              {currentStep > 1 ? (
+                <button type="button" onClick={handlePrevious}>
+                  Previous
+                </button>
+              ) : null}
+              {currentStep < 4 ? (
+                <button type="button" onClick={handleNext}>
+                  Next
+                </button>
+              ) : (
+                <button type="button" onClick={handleFinalSubmit}>
+                  Submit Admission
+                </button>
+              )}
             </div>
           </div>
         </>

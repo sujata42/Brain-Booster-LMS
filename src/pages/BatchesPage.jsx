@@ -93,7 +93,42 @@ const batchCards = [
   }
 ];
 
-function AddBatchModal({ open, onClose }) {
+function AddBatchModal({ open, onClose, onSubmit }) {
+  const initialForm = {
+    branch: "",
+    title: "",
+    course: "",
+    startDate: "",
+    endDate: "",
+    startTime: "",
+    endTime: "",
+    faculties: "",
+    isOnline: false
+  };
+  const [form, setForm] = useState(initialForm);
+
+  function handleChange(event) {
+    const { name, value, type, checked } = event.target;
+    setForm((current) => ({
+      ...current,
+      [name]: type === "checkbox" ? checked : value
+    }));
+  }
+
+  function handleSubmit() {
+    if (!form.branch || !form.title || !form.course) {
+      return;
+    }
+
+    onSubmit(form);
+    setForm(initialForm);
+    onClose();
+  }
+
+  function handleReset() {
+    setForm(initialForm);
+  }
+
   if (!open) return null;
 
   return (
@@ -109,19 +144,23 @@ function AddBatchModal({ open, onClose }) {
         <div className="lms-modal-grid">
           <label>
             Branch *
-            <select defaultValue="">
+            <select name="branch" value={form.branch} onChange={handleChange}>
               <option value="">Select Branch</option>
               <option>Shivajinagar</option>
+              <option>Aloknagar</option>
             </select>
           </label>
           <label>
             Batch Title *
-            <input type="text" />
+            <input name="title" type="text" value={form.title} onChange={handleChange} />
           </label>
           <label>
             Course *
-            <select defaultValue="">
+            <select name="course" value={form.course} onChange={handleChange}>
               <option value="">Select Course</option>
+              <option>SPOKEN ENGLISH</option>
+              <option>Abacus level 1</option>
+              <option>GERMAN</option>
             </select>
           </label>
 
@@ -138,28 +177,28 @@ function AddBatchModal({ open, onClose }) {
 
           <label>
             Start Date *
-            <input type="text" placeholder="mm/dd/yyyy" />
+            <input name="startDate" type="text" placeholder="mm/dd/yyyy" value={form.startDate} onChange={handleChange} />
           </label>
           <label>
             Expected End Date *
-            <input type="text" placeholder="mm/dd/yyyy" />
+            <input name="endDate" type="text" placeholder="mm/dd/yyyy" value={form.endDate} onChange={handleChange} />
           </label>
           <label>
             Start Time *
-            <input type="text" placeholder="--:-- --" />
+            <input name="startTime" type="text" placeholder="--:-- --" value={form.startTime} onChange={handleChange} />
           </label>
           <label>
             End Time *
-            <input type="text" placeholder="--:-- --" />
+            <input name="endTime" type="text" placeholder="--:-- --" value={form.endTime} onChange={handleChange} />
           </label>
 
           <label className="span-2">
             Faculties *
-            <input type="text" placeholder="Select trainer(s)..." />
+            <input name="faculties" type="text" placeholder="Select trainer(s)..." value={form.faculties} onChange={handleChange} />
           </label>
 
           <label className="lms-toggle-row span-2">
-            <input type="checkbox" />
+            <input name="isOnline" type="checkbox" checked={form.isOnline} onChange={handleChange} />
             Online batch
           </label>
           <label className="span-2">
@@ -173,10 +212,10 @@ function AddBatchModal({ open, onClose }) {
         </div>
 
         <footer>
-          <button type="button" className="lms-btn-light">
+          <button type="button" className="lms-btn-light" onClick={handleReset}>
             Reset
           </button>
-          <button type="button" className="lms-btn-solid" onClick={onClose}>
+          <button type="button" className="lms-btn-solid" onClick={handleSubmit}>
             Submit
           </button>
         </footer>
@@ -220,6 +259,28 @@ function BatchCard({ batch }) {
 
 export function BatchesPage() {
   const [isAddOpen, setIsAddOpen] = useState(false);
+  const [batches, setBatches] = useState(batchCards);
+
+  function handleAddBatch(form) {
+    const range = `${form.startDate || "-"} - ${form.endDate || "-"}`;
+    const time = `${form.startTime || "--:--"} - ${form.endTime || "--:--"}`;
+    const trainers = form.faculties
+      ? form.faculties.split(",").map((item) => item.trim()).filter(Boolean)
+      : ["Trainer"];
+
+    const newBatch = {
+      title: form.title,
+      course: form.course,
+      range,
+      branch: form.branch,
+      time,
+      days: "Mon · Tue · Wed · Thu · Fri",
+      trainers,
+      students: 0
+    };
+
+    setBatches((current) => [newBatch, ...current]);
+  }
 
   return (
     <section className="page-section lms-page">
@@ -246,21 +307,24 @@ export function BatchesPage() {
         <article className="lms-total-card">
           <h3>Total Batches</h3>
           <div>
-            <strong>9</strong>
+            <strong>{batches.length}</strong>
             <span>My Branches</span>
           </div>
           <i />
         </article>
 
         <div className="lms-batch-grid">
-          {batchCards.map((batch) => (
-            <BatchCard key={batch.title} batch={batch} />
+          {batches.map((batch) => (
+            <BatchCard key={`${batch.title}-${batch.range}-${batch.time}`} batch={batch} />
           ))}
         </div>
       </section>
 
-      <AddBatchModal open={isAddOpen} onClose={() => setIsAddOpen(false)} />
+      <AddBatchModal
+        open={isAddOpen}
+        onClose={() => setIsAddOpen(false)}
+        onSubmit={handleAddBatch}
+      />
     </section>
   );
 }
-

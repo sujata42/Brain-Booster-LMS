@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 const navItems = [
   { to: "/dashboard", label: "Dashboard", icon: "dashboard" },
@@ -228,13 +228,19 @@ function ChevronIcon({ open }) {
 }
 
 export function AppLayout() {
+  const navigate = useNavigate();
   const location = useLocation();
+  const userMenuRef = useRef(null);
   const [isExamOpen, setIsExamOpen] = useState(true);
   const [isLmsOpen, setIsLmsOpen] = useState(false);
   const [isHrmsOpen, setIsHrmsOpen] = useState(() =>
     location.pathname.startsWith("/hrms")
   );
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(
+    () => localStorage.getItem("demo_theme") === "dark"
+  );
   const pageTitles = {
     "/dashboard": "Dashboard",
     "/messages": "Messages",
@@ -261,6 +267,44 @@ export function AppLayout() {
   };
 
   const headerTitle = pageTitles[location.pathname] ?? "Dashboard";
+  const savedUser = localStorage.getItem("demo_auth_user");
+  let parsedUser = null;
+  try {
+    parsedUser = savedUser ? JSON.parse(savedUser) : null;
+  } catch {
+    parsedUser = null;
+  }
+  const firstName = parsedUser?.firstName ?? "Demo";
+  const lastName = parsedUser?.lastName ?? "User";
+  const fullName = `${firstName} ${lastName}`.trim();
+  const roleName = parsedUser?.role ?? "Admin";
+  const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+
+  function handleLogout() {
+    localStorage.removeItem("demo_auth_token");
+    localStorage.removeItem("demo_auth_user");
+    setIsUserMenuOpen(false);
+    navigate("/login", { replace: true });
+  }
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setIsUserMenuOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.body.classList.toggle("dark-theme", isDarkTheme);
+    localStorage.setItem("demo_theme", isDarkTheme ? "dark" : "light");
+  }, [isDarkTheme]);
 
   return (
     <div className="app-shell">
@@ -268,9 +312,9 @@ export function AppLayout() {
         <div>
           <div className="brand">JBB</div>
           <div className="sidebar-card">
-            <div className="sidebar-avatar">SD</div>
-            <h3>Sujata Dhoni</h3>
-            <span className="sidebar-role">Admin</span>
+            <div className="sidebar-avatar">{initials}</div>
+            <h3>{fullName}</h3>
+            <span className="sidebar-role">{roleName}</span>
           </div>
           <nav className="nav-list">
             {navItems.map((item) => (
@@ -587,7 +631,12 @@ export function AppLayout() {
                 />
               </svg>
             </button>
-            <button className="topbar-icon" type="button" title="Theme">
+            <button
+              className="topbar-icon"
+              type="button"
+              title="Theme"
+              onClick={() => setIsDarkTheme((value) => !value)}
+            >
               <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true">
                 <path
                   d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"
@@ -599,21 +648,40 @@ export function AppLayout() {
                 />
               </svg>
             </button>
-            <div className="topbar-user">
-              <div className="topbar-user-avatar">
-                <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
-                  <path
-                    d="M12 12a4 4 0 100-8 4 4 0 000 8zm-7 9a7 7 0 0114 0"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-              <span>Sujata Dhoni</span>
-              <span className="topbar-caret">▾</span>
+            <div className="topbar-user-wrap" ref={userMenuRef}>
+              <button
+                className="topbar-user topbar-user-button"
+                type="button"
+                onClick={() => setIsUserMenuOpen((prev) => !prev)}
+                aria-expanded={isUserMenuOpen}
+                aria-haspopup="menu"
+              >
+                <div className="topbar-user-avatar">
+                  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                    <path
+                      d="M12 12a4 4 0 100-8 4 4 0 000 8zm-7 9a7 7 0 0114 0"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+                <span>{fullName}</span>
+                <span className="topbar-caret">▾</span>
+              </button>
+              {isUserMenuOpen ? (
+                <div className="topbar-user-menu" role="menu">
+                  <button
+                    type="button"
+                    className="topbar-user-menu-item"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : null}
             </div>
           </div>
         </header>
